@@ -3,7 +3,6 @@ from fastapi import FastAPI, HTTPException, APIRouter
 import  qury
 app = FastAPI()
 router = APIRouter()
-router = FastAPI.routes()
 my_qury = qury.Mysql_Service()
 
 @router.get('/analytics/top-customers')
@@ -20,3 +19,7 @@ def customers_without_orders():
         return str(e)
 @router.get('/analytics/zero-credit-active-customers')
 def get_zero_credit_active_customers():
+    try:
+        return my_qury.zero_credit_active_customers()
+    except HTTPException as e:
+        return str(e)
