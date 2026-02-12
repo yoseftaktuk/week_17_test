@@ -31,10 +31,18 @@ services:
     volumes:
       - kafka_kraft:/var/lib/kafka/data
 
-  api:
-    build: /api
+  analytics-api:
+    build: /analytics-api
     ports:
-      - 8000:8000 
+      - 8000:8000
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+      MYSQL_DATABASE: users
+    depends_on:
+      mysql:
+        condition: service_healthy
   mongo:
     image: mongo:latest
     ports:
@@ -50,11 +58,14 @@ services:
       retries: 3
       start_period: 30s   
 
-  app:
+  mysql_service:
     build: /consumer  
-    environment: 
-       MONGO_URI: mongodb://mongo:27017/   
-       KAFKA_URI: kafka:9092   
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+      MYSQL_DATABASE: users
+      KAFKA_URI: kafka:9092
     depends_on:
       mongo:
         condition: service_healthy
@@ -77,16 +88,13 @@ services:
             timeout: 20s
             retries: 10     
         
-  sql_service:
-    build: produser   
+  mongo_service:
+    build: /producer
     depends_on: 
       mysql:
        condition: service_healthy
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: users
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: apppass  
+      URI: mongodb://mongo:27017/
 
 volumes:
   kafka_kraft: 

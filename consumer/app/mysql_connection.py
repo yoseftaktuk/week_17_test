@@ -17,26 +17,26 @@ class MysqlManager:
         self.create_customer_table()
         self.create_order_table()
     def create_customer_table(self):
-        qury = '''CREATE TABLE IF NOT EXISTS Customer(
+        qury = '''CREATE TABLE IF NOT EXISTS Customer (
                 customerNumber INT PRIMARY KEY,
                 type VARCHAR(50),
                 customerName VARCHAR(50),
                 contactLastName VARCHAR(50),
                 contactFirstName VARCHAR(50),
-                phone int(10),
+                phone VARCHAR(10),
                 addressLine1 VARCHAR(50),
                 addressLine2 VARCHAR(50),
                 city VARCHAR(50),
                 state VARCHAR(50),
                 postalCode VARCHAR(50),
-                country ARCHAR(50),
+                country VARCHAR(50),
                 salesRepEmployeeNumber INT,
-                creditLimit ARCHAR(50)
+                creditLimit VARCHAR(50)
                 ); '''
         self.cruser.execute(qury)
         self.connection.commit()
     def create_order_table(self):
-        qury = '''CREATE TABLE IF NOT EXISTS Order(
+        qury = '''CREATE TABLE IF NOT EXISTS Order (
         orderNumber INT PRIMARY KEY,
         type VARCHAR(50),
         orderDate VARCHAR(50),
@@ -44,7 +44,7 @@ class MysqlManager:
         shippedDate VARCHAR(50),
         status VARCHAR(50),
         comments VARCHAR(50),
-        FOREIGN KEY (customerNumber) REFERENCES Customer(customerNumber) 
+        customerNumber INT 
         )'''
         self.cruser.execute(qury)
         self.connection.commit()
