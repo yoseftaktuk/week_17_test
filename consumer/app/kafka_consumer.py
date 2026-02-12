@@ -1,3 +1,7 @@
+import mysql_connection
+import os
+from confluent_kafka import Consumer
+import json
 
 
 uri = os.getenv('KAFKA_URI')
@@ -9,10 +13,10 @@ consumer_config = {
 
 consumer = Consumer(consumer_config)
 
-consumer.subscribe(["registration"])
+consumer.subscribe(["suspicious"])
 
 
-print("🟢 Consumer is running and subscribed to registration topic")
+print("🟢 Consumer is running and subscribed to suspicious topic")
 
 try:
     while True:
@@ -25,9 +29,9 @@ try:
 
         value = msg.value().decode("utf-8")
         registr = json.loads(value)
-        registr = utilis.add_insertion_time(registr)
+        #registr = utilis.add_insertion_time(registr)
         print(f"📦 Received order: {registr}")
-        mongo_connection.Mongo_manager().inser_register(data=registr)
+        #mongo_connection.Mongo_manager().inser_register(data=registr)
 except KeyboardInterrupt:
     print("\n🔴 Stopping consumer")
 
