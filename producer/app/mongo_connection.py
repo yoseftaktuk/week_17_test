@@ -17,3 +17,7 @@ class Mongo_manager:
             self.collection.insert_one(data)
             return {'massage':'data save'}
         self.collection.insert_many(data)
+    def get_30(self, num):
+        return self.collection.find().skip(num).to_list() 
+    
+    
