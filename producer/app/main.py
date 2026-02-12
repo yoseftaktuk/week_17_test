@@ -10,3 +10,6 @@ def main():
             break
         kafka_publisher.send_30(result)
         num += 30
+
+if __name__ == "__main__":
+    main()

@@ -49,32 +49,32 @@ class MysqlManager:
         self.cruser.execute(qury)
         self.connection.commit()
 
-    def insert_to_customer(self, data: list):
+    def insert_to_customer(self, item: dict):
         qury = '''INSERT IGNORE INTO Customer (customerNumber, type,
           customerName, contactLastName, contactFirstName, phone, 
           addressLine1, addressLine2, city, state, postalCode,
           country, salesRepEmployeeNumber, creditLimit) 
           VALUES (%s, %s,%s, %s, %s,%s, %s,%s, %s, %s,%s,%s, %s, %s);''' 
-        for item in data:
-            value = (item['customerNumber'], item['type'],
+
+        value = (item['customerNumber'], item['type'],
                       item['customerName'], item['contactLastName'], 
                       item['contactLastName'], item['contactFirstName'],
                       item['phone'], item['addressLine1'], item['addressLine2'],
                       item['city'], item['state'], item['postalCode'],
                       item['country'], item['salesRepEmployeeNumber'],
                       item['creditLimit'])
-            self.cruser.execute(qury, value)
+        self.cruser.execute(qury, value)
         self.connection.commit()    
-    def insert_to_order(self, data):
+    def insert_to_order(self, item):
         qury = '''INSERT IGNORE INTO Order (
         orderNumber, type, orderDate, requiredDate,
         shippedDate, status, comments, customerNumber
         )
         VALUES (%s, %s,%s, %s, %s,%s, %s,%s)'''
-        for item in data:
-            value = (item['orderNumber'], item['type'], item['orderDate'],
+
+        value = (item['orderNumber'], item['type'], item['orderDate'],
                      item['requiredDate'], item['shippedDate'], item['status'],
                      item['comments'], item['customerNumber']) 
-            self.cruser.execute(qury, value)
+        self.cruser.execute(qury, value)
         self.connection.commit()
 

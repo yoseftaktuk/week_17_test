@@ -17,23 +17,27 @@ consumer.subscribe(["suspicious"])
 
 
 print("🟢 Consumer is running and subscribed to suspicious topic")
+def get_data(connection):
+    try:
+        while True:
+            msg = consumer.poll(1.0)
+            if msg is None:
+                continue
+            if msg.error():
+                print("❌ Error:", msg.error())
+                continue
 
-try:
-    while True:
-        msg = consumer.poll(1.0)
-        if msg is None:
-            continue
-        if msg.error():
-            print("❌ Error:", msg.error())
-            continue
+            value = msg.value().decode("utf-8")
+            data = json.loads(value)
+            for item in data:
+                if item['type'] == 'customer':
+                    connection.insert_to_customer(item)
+                    continue
+                connection.insert_to_order(item)
+                print(f"📦 Received order: {item}")
 
-        value = msg.value().decode("utf-8")
-        registr = json.loads(value)
-        #registr = utilis.add_insertion_time(registr)
-        print(f"📦 Received order: {registr}")
-        #mongo_connection.Mongo_manager().inser_register(data=registr)
-except KeyboardInterrupt:
-    print("\n🔴 Stopping consumer")
+    except KeyboardInterrupt:
+        print("\n🔴 Stopping consumer")
 
-finally:
-    consumer.close()
+    finally:
+        consumer.close()
