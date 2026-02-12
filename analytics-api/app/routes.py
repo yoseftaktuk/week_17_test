@@ -1,9 +1,9 @@
 
 from fastapi import FastAPI, HTTPException, APIRouter
-import  qury
+import  dal
 app = FastAPI()
 router = APIRouter()
-my_qury = qury.Mysql_Service()
+my_qury = dal.Mysql_Service()
 
 @router.get('/analytics/top-customers')
 def get_top():
