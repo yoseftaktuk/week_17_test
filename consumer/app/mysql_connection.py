@@ -77,4 +77,4 @@ class MysqlManager:
                      item['comments'], item['customerNumber']) 
         self.cruser.execute(qury, value)
         self.connection.commit()
-
+        
