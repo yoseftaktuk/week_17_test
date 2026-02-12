@@ -15,6 +15,6 @@ class Mongo_manager:
             return {'massage':'data save'}
         self.collection.insert_many(data)
     def get_30(self, num):
-        return self.collection.find({}, {'_id':0}).skip(num).to_list()
+        return self.collection.find({}, {'_id':0}).limit(num).skip(num + 30).to_list()
     
     

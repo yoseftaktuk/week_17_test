@@ -36,7 +36,7 @@ class MysqlManager:
         self.cruser.execute(qury)
         self.connection.commit()
     def create_order_table(self):
-        qury = '''CREATE TABLE IF NOT EXISTS Order (
+        qury = '''CREATE TABLE IF NOT EXISTS Orders (
         orderNumber INT PRIMARY KEY,
         type VARCHAR(50),
         orderDate VARCHAR(50),
@@ -50,15 +50,15 @@ class MysqlManager:
         self.connection.commit()
 
     def insert_to_customer(self, item: dict):
-        qury = '''INSERT IGNORE INTO Customer (customerNumber, type,
-          customerName, contactLastName, contactFirstName, phone, 
-          addressLine1, addressLine2, city, state, postalCode,
-          country, salesRepEmployeeNumber, creditLimit) 
-          VALUES (%s, %s,%s, %s, %s,%s, %s,%s, %s, %s,%s,%s, %s, %s);''' 
+        qury = '''INSERT IGNORE INTO Customer (customerNumber,
+          type, customerName, contactLastName, contactFirstName, 
+        phone, addressLine1, addressLine2, city, state, postalCode, country,
+        salesRepEmployeeNumber, creditLimit)
+          VALUES (%s, %s,%s, %s, %s,%s, %s,%s, %s, %s,%s,%s, %s, %s);'''
 
         value = (item['customerNumber'], item['type'],
-                      item['customerName'], item['contactLastName'], 
-                      item['contactLastName'], item['contactFirstName'],
+                      item['customerName'], item['contactLastName'] 
+                      , item['contactFirstName'],
                       item['phone'], item['addressLine1'], item['addressLine2'],
                       item['city'], item['state'], item['postalCode'],
                       item['country'], item['salesRepEmployeeNumber'],
@@ -66,7 +66,7 @@ class MysqlManager:
         self.cruser.execute(qury, value)
         self.connection.commit()    
     def insert_to_order(self, item):
-        qury = '''INSERT IGNORE INTO Order (
+        qury = '''INSERT IGNORE INTO Orders (
         orderNumber, type, orderDate, requiredDate,
         shippedDate, status, comments, customerNumber
         )

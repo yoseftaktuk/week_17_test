@@ -2111,15 +2111,7 @@
     "salesRepEmployeeNumber": 1188,
     "creditLimit": "68700.00"
   },
-  {
-    "type": "order",
-    "orderNumber": 10164,
-    "orderDate": "2003-10-21",
-    "requiredDate": "2003-10-30",
-    "shippedDate": "2003-10-23",
-    "status": "Resolved",
-    "comments": "'This order was disputed, but resolved on 11/1/200"
-  },
+
   {
     "type": "customer",
     "customerNumber": 198,
