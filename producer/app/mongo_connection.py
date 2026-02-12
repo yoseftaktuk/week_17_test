@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-import os
 db_username = ''
 db_password = ''
 hostname = 'localhost'
