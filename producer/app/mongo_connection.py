@@ -1,14 +1,9 @@
 from pymongo import MongoClient
 import os
 import utilis
-# db_username = ''
-# db_password = ''
-# hostname = 'localhost'
-# port = 27017
 uri = os.getenv('URI',"mongodb://mongo:27017/")
 class Mongo_manager:
     def __init__(self):
-        #self.cliet =  MongoClient(f"mongodb://{db_username}:{db_password}@{hostname}:{port}")
         self.cliet =  MongoClient(uri)
         self.cliet['admin']
         self.db = self.cliet['admin']
